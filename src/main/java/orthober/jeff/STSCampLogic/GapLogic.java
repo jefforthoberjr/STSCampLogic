@@ -1,7 +1,15 @@
 package orthober.jeff.STSCampLogic;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import orthober.jeff.STSCampLogic.model.AvailableCampsite;
 import orthober.jeff.STSCampLogic.model.Query;
+import orthober.jeff.STSCampLogic.model.Reservation;
+
+import org.joda.time.Interval;
 
 public class GapLogic {
 
@@ -10,9 +18,14 @@ public class GapLogic {
 	 */
 	
 	public static AvailableCampsite[] findAllAvailableCampspots(Query q) {
-		//TODO add logic
-		//Hardcoded example for testing
 		
+		//Interval foo = new Interval(q.getSearch().getStartDate(), q.getSearch().getEndDate());
+		
+		//Convert all reservations dates ranges to Interval
+		Stream<Reservation> f = Arrays.stream(q.getReservations());
+		List<Interval> foo = f.map(r -> new Interval(r.getStartDate(), r.getEndDate())).collect(Collectors.toList());
+		
+		//Hardcoded example for testing
 		AvailableCampsite siteA = new AvailableCampsite();
 		siteA.setName("FOOBAR CAMP SITE A");
 		AvailableCampsite siteB = new AvailableCampsite();
