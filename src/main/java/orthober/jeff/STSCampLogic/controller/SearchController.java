@@ -14,7 +14,7 @@ import orthober.jeff.STSCampLogic.model.Search;
 @RestController
 public class SearchController {
 
-    //This classed use to verify JSON consumption of search objects
+    //This class is used to verify JSON consumption of search objects
 
     @RequestMapping(value = "/search")
     public void campsite(@RequestBody Search search) {

@@ -15,7 +15,7 @@ import orthober.jeff.STSCampLogic.model.GapRuleList;
 @RestController
 public class GapRulesController {
 
-    //This classed use to verify JSON consumption of gaprule objects
+    //This class is used to verify JSON consumption of gaprule objects
 
     @RequestMapping(value = "/gaprulelist")
     public void gapRuleList(@RequestBody GapRuleList gapRuleList) {
