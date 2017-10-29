@@ -57,6 +57,106 @@
 				"description": "Exercise JSON consumption of reservation object"
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:8080/campsitelist",
+			"request": {
+				"url": "localhost:8080/campsitelist",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"campsites\": [\n    {\n      \"id\": 1,\n      \"name\": \"Grizzly Adams Adventure Cabin\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Lewis and Clark Camp Spot\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Jonny Appleseed Log Cabin\"\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Davey Crockett Camphouse\"\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Daniel Boone Bungalow\"\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Teddy Roosevelt Tent Site\"\n    },\n    {\n      \"id\": 7,\n      \"name\": \"Edmund Hillary Igloo\"\n    },\n    {\n      \"id\": 8,\n      \"name\": \"Bear Grylls Cozy Cave\"\n    },\n    {\n      \"id\": 9,\n      \"name\": \"Wyatt Earp Corral\"\n    }\n  ]\n}"
+				},
+				"description": "Execise JSON consumption for a list of campsite objects"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/reservationlist",
+			"request": {
+				"url": "localhost:8080/reservationlist",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"reservations\": [\n    {\"campsiteId\": 1, \"startDate\": \"2016-06-01\", \"endDate\": \"2016-06-04\"},\n    {\"campsiteId\": 1, \"startDate\": \"2016-06-11\", \"endDate\": \"2016-06-13\"},\n    {\"campsiteId\": 2, \"startDate\": \"2016-06-08\", \"endDate\": \"2016-06-09\"},\n    {\"campsiteId\": 3, \"startDate\": \"2016-06-04\", \"endDate\": \"2016-06-06\"},\n    {\"campsiteId\": 3, \"startDate\": \"2016-06-14\", \"endDate\": \"2016-06-16\"},\n    {\"campsiteId\": 4, \"startDate\": \"2016-06-03\", \"endDate\": \"2016-06-05\"},\n    {\"campsiteId\": 4, \"startDate\": \"2016-06-13\", \"endDate\": \"2016-06-14\"},\n    {\"campsiteId\": 5, \"startDate\": \"2016-06-03\", \"endDate\": \"2016-06-06\"},\n    {\"campsiteId\": 5, \"startDate\": \"2016-06-12\", \"endDate\": \"2016-06-14\"},\n    {\"campsiteId\": 6, \"startDate\": \"2016-06-04\", \"endDate\": \"2016-06-06\"},\n    {\"campsiteId\": 6, \"startDate\": \"2016-06-11\", \"endDate\": \"2016-06-12\"},\n    {\"campsiteId\": 6, \"startDate\": \"2016-06-16\", \"endDate\": \"2016-06-16\"},\n    {\"campsiteId\": 7, \"startDate\": \"2016-06-03\", \"endDate\": \"2016-06-04\"},\n    {\"campsiteId\": 7, \"startDate\": \"2016-06-07\", \"endDate\": \"2016-06-09\"},\n    {\"campsiteId\": 7, \"startDate\": \"2016-06-13\", \"endDate\": \"2016-06-16\"},\n    {\"campsiteId\": 8, \"startDate\": \"2016-06-01\", \"endDate\": \"2016-06-02\"},\n    {\"campsiteId\": 8, \"startDate\": \"2016-06-05\", \"endDate\": \"2016-06-06\"},\n    {\"campsiteId\": 9, \"startDate\": \"2016-06-03\", \"endDate\": \"2016-06-05\"},\n    {\"campsiteId\": 9, \"startDate\": \"2016-06-12\", \"endDate\": \"2016-06-16\"}\n  ]\n}"
+				},
+				"description": "Exercise JSON consuption of a list of reservation objects"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/search",
+			"request": {
+				"url": "localhost:8080/search",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2016-06-07\",\n    \"endDate\": \"2016-06-10\"\n}"
+				},
+				"description": "Exercise JSON consuption of search object"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/gaprule",
+			"request": {
+				"url": "localhost:8080/gaprule",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"gapSize\": 2\n}"
+				},
+				"description": "Exercise JSON consumption of gaprule object"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/gaprulelist",
+			"request": {
+				"url": "localhost:8080/gaprulelist",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"gapRules\": [\n     {\n       \"gapSize\": 2\n     },\n     {\n       \"gapSize\": 3\n     }\n  ]\n}"
+				},
+				"description": "Exercise JSON consuption of gap rules objects"
+			},
+			"response": []
 		}
 	]
 }
