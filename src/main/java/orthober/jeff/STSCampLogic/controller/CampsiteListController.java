@@ -15,7 +15,7 @@ import orthober.jeff.STSCampLogic.model.CampsiteList;
 @RestController
 public class CampsiteListController {
 
-    //This classed use to verify JSON consumption of campsite objects
+    //This class is used to verify JSON consumption of campsite objects
 
     @RequestMapping(value = "/campsitelist")
     public void campsiteList(@RequestBody CampsiteList campsiteList) {
