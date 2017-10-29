@@ -1,0 +1,62 @@
+{
+	"variables": [],
+	"info": {
+		"name": "STSCampLogic",
+		"_postman_id": "f5be5a5c-cf23-5e9e-188f-d7871e2aef42",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/greeting",
+			"request": {
+				"url": "localhost:8080/greeting",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Exercise the greeting endpoint"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/campsite",
+			"request": {
+				"url": "localhost:8080/campsite",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n\t\"name\": \"Grizzly Adams Adventure Cabin\"\n}"
+				},
+				"description": "Exercise JSON consumption of a campsite object"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/reservation",
+			"request": {
+				"url": "localhost:8080/reservation",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"campsiteId\": 1, \n\t\"startDate\": \"2016-06-01\", \n\t\"endDate\": \"2016-06-04\"\n}\n"
+				},
+				"description": "Exercise JSON consumption of reservation object"
+			},
+			"response": []
+		}
+	]
+}
