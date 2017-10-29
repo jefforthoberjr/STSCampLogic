@@ -22,7 +22,7 @@ public class GreetingController {
     @RequestMapping(method = RequestMethod.GET, value = "/greeting")
     public Greeting greeting(
     		@RequestParam(value="name", required=false, defaultValue="World") String name) {
-    		System.out.println("Just got a GET request.");
+    		System.out.println("Just got a GET request for /greeting.");
         return new Greeting(counter.incrementAndGet(),
                             String.format(template, name));
     }
