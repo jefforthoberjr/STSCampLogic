@@ -1,10 +1,12 @@
-package orthober.jeff.STSCampLogic;
+package orthober.jeff.STSCampLogic.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import orthober.jeff.STSCampLogic.model.Greeting;
 
 /**
  * Controller

@@ -1,4 +1,4 @@
-package orthober.jeff.STSCampLogic;
+package orthober.jeff.STSCampLogic.model;
 
 import java.util.ArrayList;
 import java.util.List;

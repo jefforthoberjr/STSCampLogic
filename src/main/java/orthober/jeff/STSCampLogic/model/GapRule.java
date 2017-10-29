@@ -1,4 +1,4 @@
-package orthober.jeff.STSCampLogic;
+package orthober.jeff.STSCampLogic.model;
 
 /**
  * Domain object

@@ -1,8 +1,10 @@
-package orthober.jeff.STSCampLogic;
+package orthober.jeff.STSCampLogic.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import orthober.jeff.STSCampLogic.model.Campsite;
 
 /**
  * Controller
