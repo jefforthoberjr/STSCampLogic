@@ -6,6 +6,10 @@ package orthober.jeff.STSCampLogic.model;
  *
  */
 public class GapRule{
+	
+	/**
+	 * A gap size that is not allowed
+	 */
     private long gapSize;
     
     // getters and setters
