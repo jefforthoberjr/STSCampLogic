@@ -157,6 +157,46 @@
 				"description": "Exercise JSON consuption of gap rules objects"
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:8080/search",
+			"request": {
+				"url": "localhost:8080/search",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2016BADDATE\",\n    \"endDate\": \"2016BADDATE\"\n}"
+				},
+				"description": "Exercise Bad Date format for search"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/reservation",
+			"request": {
+				"url": "localhost:8080/reservation",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"campsiteId\": 1, \n\t\"startDate\": \"2016BADDATE\", \n\t\"endDate\": \"2016BADDATE\"\n}"
+				},
+				"description": "Exercise bad date format for reservation"
+			},
+			"response": []
 		}
 	]
 }
