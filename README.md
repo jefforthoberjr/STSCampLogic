@@ -117,13 +117,13 @@ Once my environment was containerized it was easy to find free hosting. This tim
 ## Assumptions
 ### Dates within a reservation encompass the full 24 hours of each day.
 Thus input of startdate=2017-01-01 and enddate=2017-01-01 really means:
-2017-01-01T00:00:00 through 2017-02-01T00:00:00
+2017-01-01T00:00:00 through 2017-01-02T00:00:00
 
 ### No two site will have the same name
 The input campsites have an id to uniquely identify sites, however the output format only wanted site name. This could be ambiguous if multiple sites shared the same name.
 
 ### Valid Input
-Assumes dates aren't malformed (i.e. start_date occurs after end_date)
+Assumes dates aren't malformed (i.e. start_date occurs after end_date).
 Assumes reservation list doesn't contain overlapping entries.
 
 
