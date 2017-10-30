@@ -96,14 +96,14 @@ Build and deployment process:
 5) Container hosting on sloppy.io automatically grabs the latest version of the docker image
 
 
-### My Approach to Solving this Problem
+## My Approach to Solving this Problem
 The business logic was complex enough to hack out in code. (Otherwise I was tempted to persist all objects into SQL db and an SQL take care of filting results).
 
 I reverse engineered the business logic based on the example, using excel, pen, and paper to visually the problem. This helped me understand how the dates should be handled (inclusive vs. exclusive, etc.). 
 
 All of the business logic lives in GapLogic.java method findAllAvailableCampspots
 
-![pic of sketch](https://github.com/jefforthoberjr/STSCampLogic/pic.jpg)
+![pic of sketch](https://github.com/jefforthoberjr/STSCampLogic/blob/master/pic.jpg)
 
 Once I had the algorithm sketched out the bulk of the work was setuping the scaffolding and workflow.
 
@@ -114,26 +114,26 @@ Early testing came in the form of ad-hoc rest call (see postman collection) to e
 Once my environment was containerized it was easy to find free hosting. This time around I experiments with Sloppy.io. I recommend it.
 
 
-### Assumptions
-## Dates within a reservation encompass the full 24 hours of each day.
+## Assumptions
+### Dates within a reservation encompass the full 24 hours of each day.
 Thus input of startdate=2017-01-01 and enddate=2017-01-01 really means:
 2017-01-01T00:00:00 through 2017-02-01T00:00:00
 
-## No two site will have the same name
+### No two site will have the same name
 The input campsites have an id to uniquely identify sites, however the output format only wanted site name. This could be ambiguous if multiple sites shared the same name.
 
-## Valid Input
+### Valid Input
 Assumes dates aren't malformed (i.e. start_date occurs after end_date)
 Assumes reservation list doesn't contain overlapping entries.
 
 
-### Action Items, Room For Improvement
-## Time
+## Action Items, Room For Improvement
+### Time
 As with any code involves time it can be very tricky with many corner cases; I stopped short of exercising day-lights savings and leap-year scenarios.
 
 Timezones I left to be interpretted as the system's current timezone setting (e.g. MST). Real production code should otherwise have everything in UTC.
 
-## Logging
-My logging currently is all System.out.println statements. If I throw more hours into this project I would utilize tomcat's logger with appropriate logging level.
+### Logging
+My logging currently is all System.out.println statements. If I throw more hours into this project I would utilize Tomcat's logger with appropriate logging level.
 
 
