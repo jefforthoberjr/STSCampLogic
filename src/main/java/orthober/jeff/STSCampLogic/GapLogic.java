@@ -22,6 +22,7 @@ public class GapLogic {
 	 */
 	
 	public static AvailableCampsite[] findAllAvailableCampspots(Query q) {
+		List<Long> validSiteIds = new ArrayList<Long>();
 		
 		//add +1 day to endDate, to ensure the range fully encompasses the last day 
 		Interval searchInterval = new Interval(q.getSearch().getStartDate(), q.getSearch().getEndDate().plusDays(1));
@@ -29,17 +30,16 @@ public class GapLogic {
 		Map<Long, List<Interval>> reservationsBySite = groupReservationsBySite(q.getCampsites(), q.getReservations());
 		
 		//Reservation validity is determined independently for each campsite
-		List<Long> validSiteIds = new ArrayList<Long>();
 		for(Long siteId : reservationsBySite.keySet()) {
 			
 			if(anyOverlapWithReservations(reservationsBySite.get(siteId), searchInterval)) {
-				System.out.println("search overlaps an existing reservation for site " + siteId);
+				System.out.println("reservation cannot be made for site " + siteId + " . It overlaps an existing reservation.");
 				continue;
 			}
 			
 			//Check: Would the search create any unwanted gaps?
 			Optional<Interval> reservationBefore = getNearestReservationBeforeSearchInterval(reservationsBySite.get(siteId), searchInterval);			
-			Optional<Interval> nearestReservationAfterSearchInterval = getNearestReservationAfterSearchInterval(reservationsBySite.get(siteId), searchInterval);
+			Optional<Interval> reservationAfter = getNearestReservationAfterSearchInterval(reservationsBySite.get(siteId), searchInterval);
 
 			//DEBUG
 			//System.out.println("For site " + siteId + 
@@ -51,7 +51,13 @@ public class GapLogic {
 					.map(g -> g.getGapSize())
 					.collect(Collectors.toList());
 			
-				//TODO compare nearestReservations with gapsToAvoid
+			if(isInViolationOfGapRules(searchInterval, reservationBefore, reservationAfter, gapsToAvoid) ){
+				System.out.println("reservation cannot be made for site " + siteId + " . It would create a gap that violates the gap rules.");
+				continue;
+			}
+			
+			System.out.println("Reservation is valid for site " + siteId);
+			validSiteIds.add(siteId);
 		}
 		
 		//Hardcoded example for testing
@@ -144,6 +150,34 @@ public class GapLogic {
 			.add(new Interval(r.getStartDate(), r.getEndDate().plusDays(1))));
 		
 		return reservationsBySite;
+	}
+	
+	/**
+	 * 
+	 * @param searchInterval
+	 * @param reservationBefore
+	 * @param reservationAfter
+	 * @param gapsToAvoid
+	 * @return
+	 */
+	public static Boolean isInViolationOfGapRules(Interval searchInterval, Optional<Interval> reservationBefore, Optional<Interval> reservationAfter, List<Long> gapsToAvoid) {
+		Long gapBefore = 0L;
+		if(reservationBefore.isPresent()) {
+			Interval intervalBefore = searchInterval.gap(reservationBefore.get());
+			if(intervalBefore != null) {
+				gapBefore = intervalBefore.toDuration().getStandardDays();
+			}
+		}
+		
+		Long gapAfter = 0L;
+		if(reservationAfter.isPresent()) {
+			Interval intervalAfter = searchInterval.gap(reservationAfter.get());
+			if(intervalAfter != null) {
+				gapAfter = intervalAfter.toDuration().getStandardDays();
+			}
+		}
+		
+		return (gapsToAvoid.contains(gapBefore) || gapsToAvoid.contains(gapAfter));
 	}
 	
 }
