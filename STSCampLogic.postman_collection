@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8080/greeting",
+			"name": "/greeting endpoint",
 			"request": {
 				"url": "localhost:8080/greeting",
 				"method": "GET",
@@ -19,7 +19,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/campsite",
+			"name": "/campsite endpoint",
 			"request": {
 				"url": "localhost:8080/campsite",
 				"method": "POST",
@@ -39,7 +39,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/reservation",
+			"name": "/reservation endpoint",
 			"request": {
 				"url": "localhost:8080/reservation",
 				"method": "POST",
@@ -59,7 +59,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/campsitelist",
+			"name": "/campsitelist endpoint",
 			"request": {
 				"url": "localhost:8080/campsitelist",
 				"method": "POST",
@@ -79,7 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/reservationlist",
+			"name": "/reservationlist endpoint",
 			"request": {
 				"url": "localhost:8080/reservationlist",
 				"method": "POST",
@@ -99,7 +99,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/search",
+			"name": "/search endpoint",
 			"request": {
 				"url": "localhost:8080/search",
 				"method": "POST",
@@ -119,7 +119,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/gaprule",
+			"name": "/gaprule endpoint",
 			"request": {
 				"url": "localhost:8080/gaprule",
 				"method": "POST",
@@ -139,7 +139,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/gaprulelist",
+			"name": "/gaprulelist endpoint",
 			"request": {
 				"url": "localhost:8080/gaprulelist",
 				"method": "POST",
@@ -159,7 +159,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/search",
+			"name": "/search endpoint (with bad date)",
 			"request": {
 				"url": "localhost:8080/search",
 				"method": "POST",
@@ -179,7 +179,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/reservation",
+			"name": "/reservation endpoint (with bad date)",
 			"request": {
 				"url": "localhost:8080/reservation",
 				"method": "POST",
@@ -199,7 +199,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/query",
+			"name": "/query endpoint",
 			"request": {
 				"url": "localhost:8080/query",
 				"method": "POST",
