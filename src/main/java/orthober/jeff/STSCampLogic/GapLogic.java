@@ -18,9 +18,11 @@ import org.joda.time.Interval;
 public class GapLogic {
 
 	/**
-	 * Prevents new reservations on a campsite that will create gaps of a specified size
+	 * Based on query details, this method returns a list of campsite that can
+	 * accommodate the search query, without violating gap rules. 
+	 * @param q
+	 * @return
 	 */
-	
 	public static AvailableCampsite[] findAllAvailableCampspots(Query q) {
 		List<Long> validSiteIds = new ArrayList<Long>();
 		
