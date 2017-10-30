@@ -6,6 +6,10 @@ public class AvailableCampsite {
 	
 	private String name;
 	
+	public AvailableCampsite(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}

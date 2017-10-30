@@ -60,12 +60,7 @@ public class GapLogic {
 			validSiteIds.add(siteId);
 		}
 		
-		//Hardcoded example for testing
-		AvailableCampsite siteA = new AvailableCampsite();
-		siteA.setName("FOOBAR CAMP SITE A");
-		AvailableCampsite siteB = new AvailableCampsite();
-		siteB.setName("FOOBAR CAMP SITE B");
-		AvailableCampsite[] result = {siteA, siteB};
+		AvailableCampsite[] result = generateResponseObject(validSiteIds, q.getCampsites());
 		
 		return result;
 	}
@@ -153,6 +148,8 @@ public class GapLogic {
 	}
 	
 	/**
+	 * Gaps, as determined by the number of days between the searchInterval and its
+	 * two nearest existing reservations. 
 	 * 
 	 * @param searchInterval
 	 * @param reservationBefore
@@ -178,6 +175,14 @@ public class GapLogic {
 		}
 		
 		return (gapsToAvoid.contains(gapBefore) || gapsToAvoid.contains(gapAfter));
+	}
+	
+	public static AvailableCampsite[] generateResponseObject(List<Long> validSiteIds, Campsite[] campsites) {
+		//Convert siteIds to site names
+		return Arrays.stream(campsites)
+			.filter(c -> validSiteIds.contains(c.getId()))
+			.map(c -> new AvailableCampsite(c.getName()))
+			.toArray(size -> new AvailableCampsite[size]);
 	}
 	
 }
