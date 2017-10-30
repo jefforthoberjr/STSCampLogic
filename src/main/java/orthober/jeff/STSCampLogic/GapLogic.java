@@ -9,7 +9,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import orthober.jeff.STSCampLogic.model.AvailableCampsite;
+import orthober.jeff.STSCampLogic.model.Campsite;
 import orthober.jeff.STSCampLogic.model.Query;
+import orthober.jeff.STSCampLogic.model.Reservation;
 
 import org.joda.time.Interval;
 
@@ -21,40 +23,29 @@ public class GapLogic {
 	
 	public static AvailableCampsite[] findAllAvailableCampspots(Query q) {
 		
-		//We add +1 day to endDate, to ensure the inclusive date range takes up the full day of the last day of the reservation 
+		//add +1 day to endDate, to ensure the range fully encompasses the last day 
 		Interval searchInterval = new Interval(q.getSearch().getStartDate(), q.getSearch().getEndDate().plusDays(1));
 		
-		//Reservation validity to be determined independently for each campsite
-		Map<Long, List<Interval>> reservationsBySite = new HashMap<Long, List<Interval>>();
-		Arrays.stream(q.getCampsites()).forEach(c -> 
-			reservationsBySite.put(c.getId(), new ArrayList<Interval>()));
+		Map<Long, List<Interval>> reservationsBySite = groupReservationsBySite(q.getCampsites(), q.getReservations());
 		
-		//Sort all reservations into a map, and convert dates range to Interval	
-		Arrays.stream(q.getReservations()).forEach(r -> 
-			reservationsBySite.get(r.getCampsiteId())
-			.add(new Interval(r.getStartDate(), r.getEndDate().plusDays(1))));
-		
+		//Reservation validity is determined independently for each campsite
 		List<Long> validSiteIds = new ArrayList<Long>();
 		for(Long siteId : reservationsBySite.keySet()) {
 			
-			//Check: Does the search overlap with any existing reservations?
 			if(anyOverlapWithReservations(reservationsBySite.get(siteId), searchInterval)) {
 				System.out.println("search overlaps an existing reservation for site " + siteId);
 				continue;
 			}
 			
 			//Check: Would the search create any unwanted gaps?
-			Optional<Interval> reservationBefore = getNearestReservationBeforeSearchInterval(reservationsBySite.get(siteId), searchInterval);
-			
-			//DEBUG
-			System.out.println("For site " + siteId + 
-					" the nearest reservation before search inverval is " + reservationBefore);
-			
+			Optional<Interval> reservationBefore = getNearestReservationBeforeSearchInterval(reservationsBySite.get(siteId), searchInterval);			
 			Optional<Interval> nearestReservationAfterSearchInterval = getNearestReservationAfterSearchInterval(reservationsBySite.get(siteId), searchInterval);
 
 			//DEBUG
-			System.out.println("For site " + siteId + 
-					" the nearest reservation after search inverval is " + nearestReservationAfterSearchInterval);
+			//System.out.println("For site " + siteId + 
+			//		" the nearest reservation before search inverval is " + reservationBefore);
+			//System.out.println("For site " + siteId + 
+			//		" the nearest reservation after search inverval is " + nearestReservationAfterSearchInterval);
 			
 			List<Long> gapsToAvoid = Arrays.stream(q.getGapRules())
 					.map(g -> g.getGapSize())
@@ -127,6 +118,32 @@ public class GapLogic {
 		return reservations.stream()
 				.map(r -> searchInterval.overlaps(r))
 				.anyMatch(o -> o==true);
+	}
+	
+	/**
+	 * Covert a flat list of campsite into a map grouped by siteId
+	 * 
+	 * Note: Some siteIds may have no reservations (i.e. empty list)
+	 * 
+	 * Assumes all campsiteIds all have referential integrity with campside.ids
+	 *  
+	 * @param campsites
+	 * @param reservations
+	 * @return
+	 */
+	public static Map<Long, List<Interval>> groupReservationsBySite(Campsite[] campsites, Reservation[] reservations){
+		//Reservation validity to be determined independently for each campsite
+		Map<Long, List<Interval>> reservationsBySite = new HashMap<Long, List<Interval>>();
+		Arrays.stream(campsites).forEach(c -> 
+			reservationsBySite.put(c.getId(), new ArrayList<Interval>()));
+		
+		//Sort all reservations into a map, and convert dates range to Interval	
+		//add +1 day to endDate, to ensure the range fully encompasses the last day
+		Arrays.stream(reservations).forEach(r -> 
+			reservationsBySite.get(r.getCampsiteId())
+			.add(new Interval(r.getStartDate(), r.getEndDate().plusDays(1))));
+		
+		return reservationsBySite;
 	}
 	
 }
