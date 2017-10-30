@@ -38,29 +38,19 @@ public class GapLogic {
 		for(Long siteId : reservationsBySite.keySet()) {
 			
 			//Check: Does the search overlap with any existing reservations?
-			Boolean overlap = reservationsBySite.get(siteId).stream()
-				.map(r -> searchInterval.overlaps(r))
-				.anyMatch(o -> o==true);
-			
-			if(overlap) {
+			if(anyOverlapWithReservations(reservationsBySite.get(siteId), searchInterval)) {
 				System.out.println("search overlaps an existing reservation for site " + siteId);
 				continue;
 			}
 			
 			//Check: Would the search create any unwanted gaps?
-			Optional<Interval> nearestReservationBeforeSearchInterval = reservationsBySite.get(siteId).stream()
-					.filter(r -> !r.getEnd().isAfter(searchInterval.getStart()))
-					.max((r1, r2) -> r1.getEnd().compareTo(r2.getEnd()));
-			//Note: There may be no existing reservations prior to the search interval
+			Optional<Interval> reservationBefore = getNearestReservationBeforeSearchInterval(reservationsBySite.get(siteId), searchInterval);
 			
 			//DEBUG
 			System.out.println("For site " + siteId + 
-					" the nearest reservation before search inverval is " + nearestReservationBeforeSearchInterval);
+					" the nearest reservation before search inverval is " + reservationBefore);
 			
-			Optional<Interval> nearestReservationAfterSearchInterval = reservationsBySite.get(siteId).stream()
-					.filter(r -> !r.getStart().isBefore(searchInterval.getEnd()))
-					.min((r1, r2) -> r1.getStart().compareTo(r2.getStart()));
-			//Note: There may be no existing reservations after the search interval
+			Optional<Interval> nearestReservationAfterSearchInterval = getNearestReservationAfterSearchInterval(reservationsBySite.get(siteId), searchInterval);
 
 			//DEBUG
 			System.out.println("For site " + siteId + 
@@ -81,6 +71,62 @@ public class GapLogic {
 		AvailableCampsite[] result = {siteA, siteB};
 		
 		return result;
+	}
+	
+	/**
+	 * Returns 0 or 1 Interval.
+	 * Note: There may be no existing reservations prior to the search interval
+	 * 
+	 * Reservations ending after searchInterval are ignored.
+	 * Reservations overlapping searchInterval are ignored.
+	 * 
+	 * Abutting reservations are counted still as 'before' (i.e. not ignored).
+	 * 
+	 * Undetermined behavior if multiple reservations have the save endDate. 
+	 * 
+	 * @param reservations
+	 * @param searchInterval
+	 * @return
+	 */
+	public static Optional<Interval> getNearestReservationBeforeSearchInterval(List<Interval> reservations, Interval searchInterval) {
+		return reservations.stream()
+			.filter(r -> !r.getEnd().isAfter(searchInterval.getStart()))
+			.max((r1, r2) -> r1.getEnd().compareTo(r2.getEnd()));
+	}
+	
+	/**
+	 * Returns 0 or 1 Interval.
+	 * Note: There may be no existing reservations after to the search interval
+	 * 
+	 * Reservations starting before searchInterval are ignored.
+	 * Reservations overlapping searchInterval are ignored.
+	 * 
+	 * Abutting reservations are counted still as 'after' (i.e. not ignored).
+	 * 
+	 * Undetermined behavior if multiple reservations have the save startDate. 
+	 * 
+	 * @param reservations
+	 * @param searchInterval
+	 * @return
+	 */
+	public static Optional<Interval> getNearestReservationAfterSearchInterval(List<Interval> reservations, Interval searchInterval){
+		return reservations.stream()
+			.filter(r -> !r.getStart().isBefore(searchInterval.getEnd()))
+			.min((r1, r2) -> r1.getStart().compareTo(r2.getStart()));
+	}
+	
+	/**
+	 * Returns true is at least 1 reservation overlaps with searchInterval.
+	 * Abutting reservations do not count as overlap.
+	 * 
+	 * @param reservations
+	 * @param searchInterval
+	 * @return
+	 */
+	public static Boolean anyOverlapWithReservations(List<Interval> reservations, Interval searchInterval) {
+		return reservations.stream()
+				.map(r -> searchInterval.overlaps(r))
+				.anyMatch(o -> o==true);
 	}
 	
 }
