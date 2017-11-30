@@ -2,6 +2,7 @@
 ## Jeff Orthober Jr - 2017-10-29
 
 ## Execution and Building
+These instructions provide multiple different ways to exercise the code, start with the easiest.
 
 ### How to exercise endpoint remotely
 The application is implemented as a microservice and is hosted live at
@@ -97,7 +98,7 @@ Build and deployment process:
 
 
 ## My Approach to Solving this Problem
-The business logic was complex enough to hack out in code. (Otherwise I was tempted to persist all objects into SQL db and an SQL take care of filting results).
+The business logic was complex enough to hack out in code. (Otherwise I was tempted to persist all objects into SQL db and perform results filtering via an SQL query).
 
 I reverse engineered the business logic based on the example, using excel, pen, and paper to visually the problem. This helped me understand how the dates should be handled (inclusive vs. exclusive, etc.). 
 
@@ -105,13 +106,13 @@ All of the business logic lives in GapLogic.java method findAllAvailableCampspot
 
 ![pic of sketch](https://github.com/jefforthoberjr/STSCampLogic/blob/master/pic.jpg)
 
-Once I had the algorithm sketched out the bulk of the work was setuping the scaffolding and workflow.
+Once I had the algorithm sketched, the remaining work included setting up the scaffolding and workflow.
 
-Java + Spring is a great way to stand up a microservice quickly. The rest of my build flow (git + github + docker + dockerhub) is a great way the quickly shift from local development to remote deployment. For me this has become standard practice; I even have some blog posts [highlighting great uses for docker](http://intellectualgambols.blogspot.com/2017/09/how-to-run-airflow-in-windows-with.html). 
+Java + Spring is a great way to stand up a microservice quickly. The rest of my build flow (git + github + docker + dockerhub) is a great way to quickly shift from local development to remote deployment. For me this has become standard practice; I even have some blog posts [highlighting great uses for docker](http://intellectualgambols.blogspot.com/2017/09/how-to-run-airflow-in-windows-with.html). 
 
 Early testing came in the form of ad-hoc rest call (see postman collection) to ensure JSON parsing was working properly. Later on I employeed JUnit for testing components of the business logic.
 
-Once my environment was containerized it was easy to find free hosting. This time around I experiments with Sloppy.io. I recommend it.
+Once my environment was containerized it was easy to find free hosting. This time around I experimented with Sloppy.io. I recommend it.
 
 
 ## Assumptions
@@ -120,10 +121,10 @@ Thus input of startdate=2017-01-01 and enddate=2017-01-01 really means:
 2017-01-01T00:00:00 through 2017-01-02T00:00:00
 
 ### No two site will have the same name
-The input campsites have an id to uniquely identify sites, however the output format only wanted site name. This could be ambiguous if multiple sites shared the same name.
+The input campsites have an id to uniquely identify sites, however the output format only includes site name. Response values therefore could be ambiguous to the caller, if multiple sites shared the same name.
 
 ### Valid Input
-Assumes dates aren't malformed (i.e. start_date occurs after end_date).
+Assumes dates aren't malformed (e.g. assumes start_date occurs before end_date).
 Assumes reservation list doesn't contain overlapping entries.
 
 
